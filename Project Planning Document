@@ -14,7 +14,7 @@ Flashcard Hub will be a web application built using the Flask framework. Its pri
 
 *   **Educational Need:** Flashcards are a proven study tool. Providing a simple, dedicated web platform for users to create and manage their own digital cards fulfills a common need for students and learners.
 *   **Focused User Experience:** The application prioritizes a straightforward user experience focused on manual card creation and effective studying, avoiding the complexity of automated content generation.
-*   **Value-Added Feature:** Integrating a dictionary API provides a useful, contextually relevant enhancement directly supporting the study process (vocabulary building, definition verification).
+*   **Value-Added Feature:** Integrating a dictionary API/ Wikipedia API provides a useful, contextually relevant enhancement directly supporting the study process (vocabulary building, definition verification).
 *   **Technical Requirements Alignment:** This project directly addresses all mandated technical elements:
     *   User Authentication (Login/Registration)
     *   Database Integration (Storing users, decks, cards)
