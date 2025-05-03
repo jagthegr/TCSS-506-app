@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; {{ current_year }} Your Company Name. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="text-white hover:text-gray-400 mx-2">Facebook</a>
+                <a href="#" class="text-white hover:text-gray-400 mx-2">Twitter</a>
+                <a href="#" class="text-white hover:text-gray-400 mx-2">Instagram</a>
+            </div>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

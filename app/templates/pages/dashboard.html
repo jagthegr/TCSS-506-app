@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>Dashboard</title>
+</head>
+<body class="bg-gray-100">
+    {% include 'components/navbar.html' %}
+    <div class="flex">
+        {% include 'components/sidebar.html' %}
+        <main class="flex-1 p-6">
+            <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded shadow">
+                    <h2 class="font-semibold">Card Title 1</h2>
+                    <p>Some information about this card.</p>
+                </div>
+                <div class="bg-white p-4 rounded shadow">
+                    <h2 class="font-semibold">Card Title 2</h2>
+                    <p>Some information about this card.</p>
+                </div>
+                <div class="bg-white p-4 rounded shadow">
+                    <h2 class="font-semibold">Card Title 3</h2>
+                    <p>Some information about this card.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    {% include 'components/footer.html' %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

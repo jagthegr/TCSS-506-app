@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results for "{{ query }}"{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-4">Search Results for "{{ query }}"</h1>
+
+    {% if results %}
+        <ul class="list-disc pl-5 space-y-2">
+            {% for result in results %}
+                <li>
+                    <h2 class="text-xl font-semibold">{{ result.title }}</h2>
+                    <p>{{ result.snippet | safe }}</p> {# Use safe filter if snippet contains HTML #}
+                    <a href="https://en.wikipedia.org/?curid={{ result.pageid }}" target="_blank" class="text-blue-500 hover:underline">Read more on Wikipedia</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif query %}
+        <p>No results found for "{{ query }}".</p>
+    {% else %}
+        <p>Please enter a search term.</p> {# Optional: Message if no query was provided #}
+    {% endif %}
+
+    {# Optional: Add a search form here to allow new searches #}
+    <div class="mt-8">
+        <form action="{{ url_for('main.search') }}" method="get">
+            <input type="text" name="q" placeholder="Search Wikipedia..." value="{{ query if query }}" class="border p-2 rounded">
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Search</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

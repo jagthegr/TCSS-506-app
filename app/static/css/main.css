@@ -1,0 +1,151 @@
+/* Space Theme Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Dark space background */
+    background-color: #0a0a2a; /* Deep dark blue */
+    /* Starry background effect (optional, can be performance intensive) */
+    /* background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: 0 0, 20px 20px; */
+    color: #e0e0e0; /* Light gray text for contrast */
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+nav.bg-gray-800 { /* Target specific navbar */
+    background-color: #1a1a3a !important; /* Ensure override if needed */
+    border-bottom: 1px solid #444;
+}
+
+nav a.text-gray-300 { /* Target specific navbar links */
+    color: #b0c4de !important; /* Light steel blue */
+}
+
+nav a.text-gray-300:hover {
+    color: #FFFACD !important; /* Lemon chiffon on hover */
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #ffc107;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    /* background-color: rgba(20, 20, 50, 0.8); Slightly lighter transparent background */
+    background-color: #1a1a3a; /* Slightly lighter solid dark blue */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid #444;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #343a40;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer.bg-gray-800 { /* Target specific footer */
+    background-color: #1a1a3a !important;
+    color: #e0e0e0;
+    border-top: 1px solid #444;
+}
+
+footer a {
+    color: #87CEFA !important;
+}
+
+footer a:hover {
+    color: #FFFACD !important;
+}
+
+.btn,
+.bg-blue-500 { /* Target Tailwind class used for buttons */
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #4682B4; /* Steel blue */
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn:hover,
+.hover\:bg-blue-600:hover { /* Target Tailwind class */
+    background-color: #5A9BD5; /* Lighter steel blue */
+}
+
+/* Adjust link colors for visibility */
+a,
+.text-blue-500 { /* Target Tailwind class used for links */
+    color: #87CEFA; /* Light sky blue */
+    transition: color 0.3s;
+}
+
+a:hover,
+.hover\:underline:hover { /* Target Tailwind class */
+    color: #FFFACD; /* Lemon chiffon - like a distant star */
+    text-decoration: underline;
+}
+
+/* Specific adjustments for search results page */
+.search-results h1, .search-results h2 {
+    color: #ffffff; /* Brighter white for headings */
+}
+
+.search-results p {
+    color: #c0c0c0; /* Slightly dimmer text for snippets */
+}
+
+/* Ensure input fields are visible */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+    background-color: #2a2a4a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #87CEFA;
+    box-shadow: 0 0 5px rgba(135, 206, 250, 0.5);
+}
+
+/* Override default browser styles if necessary */
+* {
+    box-sizing: border-box;
+}
