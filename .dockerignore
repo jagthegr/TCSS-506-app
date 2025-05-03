@@ -1,0 +1,29 @@
+# Git files
+.git
+.gitignore
+
+# Python cache and virtual environment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+
+# Database file (if you want it outside the container or managed by a volume)
+# instance/
+# site.db
+
+# Other specific files/folders to ignore
+*.log
+.env
