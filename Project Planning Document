@@ -1,0 +1,92 @@
+# Project Planning Document: Flashcard Hub
+
+**Team:** Ctrl+Alt+Elite
+**Members:** James G., Maddy W., Sean W.
+**Date:** May 3, 2025
+
+## 1. Project Topic and Justification
+
+### 1.1. Chosen Topic: Flashcard Hub
+
+Flashcard Hub will be a web application built using the Flask framework. Its primary function is to allow registered users to easily create, organize, manage, and study their own digital flashcard sets. A key enhancement feature will be the integration with an external dictionary API, allowing users to quickly look up definitions for terms on their flashcards.
+
+### 1.2. Justification
+
+*   **Educational Need:** Flashcards are a proven study tool. Providing a simple, dedicated web platform for users to create and manage their own digital cards fulfills a common need for students and learners.
+*   **Focused User Experience:** The application prioritizes a straightforward user experience focused on manual card creation and effective studying, avoiding the complexity of automated content generation.
+*   **Value-Added Feature:** Integrating a dictionary API provides a useful, contextually relevant enhancement directly supporting the study process (vocabulary building, definition verification).
+*   **Technical Requirements Alignment:** This project directly addresses all mandated technical elements:
+    *   User Authentication (Login/Registration)
+    *   Database Integration (Storing users, decks, cards)
+    *   External API Integration (Dictionary API)
+    *   Clear Web Application Structure (Landing, Dashboard, Deck View, Study Mode)
+    *   Deployment (AWS EC2 with Docker)
+*   **Achievable Scope & Learning:** The project scope is well-defined and achievable. It provides solid practice in full-stack web development, database management, external API usage, and cloud deployment without the significant challenge of complex NLP/content parsing required by the initial Wikipedia idea.
+
+## 2. Roles and Responsibilities
+
+While collaboration across all areas is encouraged and expected, primary responsibilities are assigned as follows to ensure focused effort:
+
+*   **James G.: Project Lead / Backend Focus**
+    *   **Responsibilities:** Overall project coordination, core Flask application setup (including Application Factory pattern), defining database models (SQLAlchemy), implementing user authentication logic (Flask-Login), core backend routing for users and decks/cards, task delegation, and ensuring adherence to the timeline. May assist with frontend and deployment tasks as needed.
+*   **Maddy W.: Frontend / UI/UX Focus**
+    *   **Responsibilities:** Designing and implementing the user interface using HTML, CSS (Tailwind), and Jinja2 templates. Developing frontend JavaScript for interactivity (including study mode and triggering API calls from the frontend). Ensuring a consistent and user-friendly experience across all pages. Implementing frontend form handling (Flask-WTF integration). Testing frontend components. May assist with backend route implementation related to page rendering.
+*   **Sean W.: Backend / API & DevOps Focus**
+    *   **Responsibilities:** Implementing the backend logic for the external Dictionary API integration (creating the endpoint, handling API keys securely, processing responses). Setting up and managing the database (migrations, connections). Developing the deployment strategy (Dockerfiles, `docker-compose.yml` for dev). Managing deployment to AWS EC2. Implementing the testing framework and writing backend tests, particularly for API interaction and CRUD operations. Assisting with backend route implementation.
+
+**Cross-Functional Tasks:** All members will participate in:
+*   Regular team meetings and communication.
+*   Code reviews.
+*   Testing (unit, integration, user acceptance).
+*   Documentation (README, inline comments).
+*   Debugging across all application layers.
+
+## 3. Project Timeline and Milestones
+
+*   **Week 1 (End Date: Sunday, May 11, 2025): Setup & Core Authentication**
+    *   Tasks: Initialize GitHub repo, set up Flask project structure, configure basic Flask app, define initial database models (User), implement registration/login/logout functionality (routes, forms, templates). Basic `base.html` template.
+    *   **Milestone:** Users can register, log in, and log out. Basic project structure exists. Code pushed to GitHub.
+
+*   **Week 2 (End Date: Sunday, May 18, 2025): Deck & Card CRUD**
+    *   Tasks: Define `Deck` and `Card` models, implement full CRUD operations (routes, forms, templates) for users to *manually* create, view, update, and delete decks and the cards within them. Basic Deck list and Card list views.
+    *   **Milestone:** Authenticated users can manually create/view/edit/delete their own flashcard decks and cards. Core data management is functional.
+
+*   **Week 3 (End Date: Sunday, May 25, 2025): External Dictionary API Integration**
+    *   Tasks: Select and register for a Dictionary API (e.g., Merriam-Webster Free Tier). Implement backend endpoint to securely call the API with a term. Connect this endpoint to a "Define Term" button/feature on the card creation/view page (frontend work by Maddy, backend by Sean). Display definition results to the user.
+    *   **Milestone:** The "Define Term" feature is functional, successfully calling the external API and displaying results within the application.
+
+*   **Week 4 (End Date: Sunday, June 1, 2025): Study Mode & UI Polish**
+    *   Tasks: Implement the `/study/<deck_id>` route and associated template. Add JavaScript for interactive card flipping and navigation. Refine overall application UI/UX using Tailwind CSS. Write more comprehensive tests for all features.
+    *   **Milestone:** Users can enter a study mode for their flashcard decks with interactive card review functionality. UI is clean and usable across the application.
+
+*   **Week 5 (End Date: Sunday, June 8, 2025): Deployment, Testing & Finalization**
+    *   Tasks: Finalize Dockerfiles, create `docker-compose.yml` for deployment, deploy application to AWS EC2 instance, perform thorough end-to-end testing, fix bugs, complete README.md documentation, prepare final project presentation/submission.
+    *   **Milestone:** Application successfully deployed and accessible on AWS EC2. All core features are functional and tested. Project documentation is complete.
+
+## 4. Chosen Technologies and Justification
+
+*   **Backend Framework:** **Flask (Python)**
+    *   *Reason:* Lightweight, flexible Python microframework allowing focus on core concepts. Extensive documentation and community support. Sufficient for project scope.
+*   **Database ORM:** **SQLAlchemy**
+    *   *Reason:* Powerful and standard Python ORM, simplifies database interaction, abstracting SQL differences. Works well with Flask via Flask-SQLAlchemy.
+*   **Database:** **PostgreSQL** (Production) / **SQLite** (Development)
+    *   *Reason:* PostgreSQL is a robust, open-source relational database suitable for production deployment. SQLite is file-based and simple for local development setup. Relational model fits user/deck/card relationships well.
+*   **User Authentication:** **Flask-Login**
+    *   *Reason:* Standard Flask extension for securely managing user sessions and login state.
+*   **Web Forms:** **Flask-WTF**
+    *   *Reason:* Integrates WTForms with Flask, providing easy form creation, validation, and crucial CSRF protection.
+*   **Templating Engine:** **Jinja2**
+    *   *Reason:* Default, powerful templating engine for Flask. Enables dynamic HTML generation with Python logic.
+*   **Frontend Styling:** **Tailwind CSS**
+    *   *Reason:* Utility-first CSS framework allows for rapid development of modern, responsive user interfaces directly within HTML markup.
+*   **External API:** **Dictionary API (e.g., Merriam-Webster, Free Dictionary API)**
+    *   *Reason:* Provides the value-added "Define Term" feature. These APIs are generally well-documented and often offer free tiers suitable for development projects. Meets the external API requirement directly.
+*   **Containerization:** **Docker**
+    *   *Reason:* Required for deployment. Packages the application and its dependencies, ensuring consistent environments from development to production. Simplifies deployment process.
+*   **Deployment Platform:** **AWS EC2**
+    *   *Reason:* Required for deployment. Provides scalable and reliable virtual servers in the cloud for hosting web applications.
+*   **Version Control:** **Git / GitHub**
+    *   *Reason:* Essential for collaborative software development, tracking changes, managing branches, and coordinating team contributions.
+
+---
+
