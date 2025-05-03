@@ -1,4 +1,4 @@
-# Modern Flask App
+# FlashCard Hub
 
 This is a modern Flask application designed with a stylish and responsive layout using Tailwind CSS. The application is structured to provide a clean separation of concerns, making it easy to maintain and extend.
 
@@ -13,7 +13,7 @@ This is a modern Flask application designed with a stylish and responsive layout
 ## Project Structure
 
 ```
-modern-flask-app
+FlashCard Hub
 ├── app
 │   ├── __init__.py
 │   ├── config.py
@@ -56,8 +56,8 @@ modern-flask-app
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/modern-flask-app.git
-   cd modern-flask-app
+   git clone https://github.com/yourusername/FlashCard-Hub.git
+   cd FlashCard-Hub
    ```
 
 2. Create a virtual environment:
