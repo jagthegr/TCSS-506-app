@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 from app.models import User # Assuming User model is in app/models/__init__.py
 
@@ -26,3 +26,7 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Please use a different email address.')
+
+class GenerateFlashcardsForm(FlaskForm):
+    topic = StringField('Wikipedia Topic', validators=[DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Generate Flashcards')

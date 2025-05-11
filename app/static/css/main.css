@@ -149,3 +149,87 @@ textarea:focus {
 * {
     box-sizing: border-box;
 }
+
+/* Add this to your existing main.css or a new CSS file linked in base.html */
+
+.flashcard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 24px; /* Spacing between cards */
+    padding: 24px;
+}
+
+.flashcard {
+    background-color: transparent; /* Or your desired card background */
+    height: 280px; /* Changed from min-height to fixed height */
+    width: 100%; /* Takes full width of grid cell up to max-width */
+    max-width: 400px; /* Maximum width for a card */
+    margin-left: auto; /* Center card in grid cell */
+    margin-right: auto; /* Center card in grid cell */
+    border-radius: 0.5rem; /* Tailwind's rounded-lg */
+    perspective: 1000px; /* For 3D effect */
+    cursor: pointer;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Ensures it takes the fixed height of .flashcard */
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Tailwind's shadow-lg equivalent */
+    border-radius: 0.5rem; /* Match flashcard parent */
+}
+
+/* Apply this class when card is flipped */
+.flashcard-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%; /* Ensures faces take full fixed height */
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    border-radius: 0.5rem; /* Match flashcard parent */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Changed from center to flex-start */
+    align-items: center;
+    padding: 1.5rem; /* Tailwind's p-6 */
+    overflow-y: auto; /* Added for vertical scrolling */
+}
+
+.flashcard-front {
+    background-color: #ffffff; /* Tailwind's bg-white */
+    color: #1f2937; /* Tailwind's text-gray-800 for example */
+}
+
+.flashcard-back {
+    background-color: #f3f4f6; /* A slightly different bg for back, e.g., gray-100 */
+    color: #1f2937; /* Tailwind's text-gray-800 */
+    transform: rotateY(180deg);
+}
+
+/* Styling for the question/answer text if needed beyond Tailwind */
+.flashcard-front h3,
+.flashcard-back h3 {
+    font-size: 1.125rem; /* Tailwind's text-lg */
+    font-weight: 600; /* Tailwind's font-semibold */
+    margin-bottom: 0.5rem; /* Tailwind's mb-2 */
+    color: #4b5563; /* Tailwind's text-gray-600 or similar */
+}
+
+.flashcard-front p,
+.flashcard-back p {
+    color: #374151; /* Tailwind's text-gray-700 or similar */
+}
+
+/* Ensure the grid div in the template uses this class if you want this specific grid styling */
+/* In view_deck.html, the div with class "grid" can be changed to "flashcard-grid" or 
+   you can adapt the existing Tailwind grid classes. For simplicity, this CSS assumes 
+   you might add a specific class like "flashcard-grid" to the container of .flashcard elements.
+   However, the .flashcard styles themselves will work with Tailwind's grid too. */
