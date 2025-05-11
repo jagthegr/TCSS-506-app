@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import re
 from typing import Optional  # Added Optional for type hinting
 
+from .wikipedia_agent import WikipediaFlashcardAgent  # Import the new agent
+
 WIKIMEDIA_API_URL = "https://en.wikipedia.org/w/api.php"
 
 def search_wikimedia(query):
@@ -97,3 +99,23 @@ def extract_flashcards_from_html_simple(html_content: str) -> list[tuple[str, st
                 flashcards.append((question, answer))
 
     return flashcards
+
+def generate_flashcards_from_topic_agent(topic: str, num_cards_desired: int = 10) -> list[tuple[str, str]]:
+    """
+    Generates flashcards for a given topic using the WikipediaFlashcardAgent.
+    """
+    agent = WikipediaFlashcardAgent()
+    # Call the agent with num_cards_desired
+    agent_cards = agent.generate_flashcards(topic, num_cards_desired=num_cards_desired)
+    
+    # Convert agent's output (list of dicts) to list of tuples
+    processed_cards = []
+    for card_dict in agent_cards:
+        if isinstance(card_dict, dict) and 'front' in card_dict and 'back' in card_dict:
+            processed_cards.append((str(card_dict['front']), str(card_dict['back'])))
+        else:
+            # It's good to log or print if a card is malformed, 
+            # helps in debugging the agent's output
+            print(f"Warning: Skipping malformed card from agent: {card_dict}")
+            
+    return processed_cards

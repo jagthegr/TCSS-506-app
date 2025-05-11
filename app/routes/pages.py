@@ -1,7 +1,7 @@
 from flask import render_template, request, jsonify, flash, redirect, url_for  # Added flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required  # Added Flask-Login imports
 from . import main  # Import the blueprint from __init__.py
-from ..utils.wikimedia import search_wikimedia, get_wikipedia_page_html, extract_flashcards_from_html_simple  # Updated imports
+from ..utils.wikimedia import search_wikimedia, generate_flashcards_from_topic_agent  # Updated imports
 from app import db  # Import db instance
 from app.forms import LoginForm, RegistrationForm, GenerateFlashcardsForm  # Added GenerateFlashcardsForm
 from app.models import User, Deck, Card  # Added Deck and Card
@@ -122,35 +122,40 @@ def generate_flashcards():
     form = GenerateFlashcardsForm()
     if form.validate_on_submit():
         topic = form.topic.data
-        html_content = get_wikipedia_page_html(topic)
+        num_cards = form.num_cards.data  # Assuming your form has a field for number of cards
 
-        if not html_content:
-            flash(f'Could not retrieve content for "{topic}" from Wikipedia.', 'danger')
-            return redirect(url_for('main.generate_flashcards'))
-        
-        extracted_cards = extract_flashcards_from_html_simple(html_content)
+        # Use the new agent-based function
+        extracted_cards = generate_flashcards_from_topic_agent(topic, num_cards_desired=num_cards)
 
         if not extracted_cards:
-            flash(f'Could not extract any flashcards for "{topic}". Try a different topic or check the page content.', 'warning')
+            flash(f'Could not generate any flashcards for "{topic}". The Wikipedia page might not exist, be ambiguous, or the content may not be suitable for flashcard generation. Please try a different topic.', 'warning')
             return redirect(url_for('main.generate_flashcards'))
 
         try:
             # Create a new Deck
-            new_deck = Deck(title=f"Flashcards on {topic}", author=current_user)
+            new_deck = Deck(title=f"Flashcards on {topic} (Agent)", author=current_user)
             db.session.add(new_deck)
+            # Flush to get new_deck.id for cards if needed, though direct association should work
+            # db.session.flush() 
 
-            for q_text, a_text in extracted_cards:
-                new_card = Card(question=q_text, answer=a_text, deck=new_deck)
-                db.session.add(new_card)
+            for card_tuple in extracted_cards: # Now card_tuple is (question, answer)
+                if isinstance(card_tuple, tuple) and len(card_tuple) == 2:
+                    question_text = card_tuple[0]
+                    answer_text = card_tuple[1]
+                    new_card = Card(question=question_text, answer=answer_text, deck=new_deck)
+                    db.session.add(new_card)
+                else:
+                    # Log or handle malformed tuple if necessary
+                    print(f"Skipping malformed card data: {card_tuple}")
             
             db.session.commit()
-            flash(f'{len(extracted_cards)} flashcards generated for "{topic}" and saved to a new deck!', 'success')
-            return redirect(url_for('main.dashboard'))
+            flash(f'{len(extracted_cards)} flashcards generated for "{topic}" using the agent and saved to a new deck!', 'success')
+            return redirect(url_for('main.view_deck', deck_id=new_deck.id)) # Redirect to the new deck
         except Exception as e:
             db.session.rollback()
             flash(f'An error occurred while saving flashcards: {str(e)}', 'danger')
             # Log the error e for debugging
-            print(f"Error saving flashcards: {e}")
+            print(f"Error saving agent-generated flashcards: {e}")
             return redirect(url_for('main.generate_flashcards'))
     else:
         if request.method == 'POST':

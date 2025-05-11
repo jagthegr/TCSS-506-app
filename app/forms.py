@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, NumberRange
 from app.models import User # Assuming User model is in app/models/__init__.py
 
 class LoginForm(FlaskForm):
@@ -29,4 +29,5 @@ class RegistrationForm(FlaskForm):
 
 class GenerateFlashcardsForm(FlaskForm):
     topic = StringField('Wikipedia Topic', validators=[DataRequired(), Length(min=1, max=140)])
+    num_cards = IntegerField('Number of Cards', validators=[DataRequired(), NumberRange(min=1, max=50)], default=10)
     submit = SubmitField('Generate Flashcards')

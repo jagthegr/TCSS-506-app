@@ -3,13 +3,17 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    /* Dark space background */
-    background-color: #0a0a2a; /* Deep dark blue */
-    /* Starry background effect (optional, can be performance intensive) */
-    /* background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
-    background-position: 0 0, 20px 20px; */
-    color: #e0e0e0; /* Light gray text for contrast */
+    background-image: url('../img/icon.jpg'); /* Set the new background image */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-attachment: fixed; /* Make the background fixed during scroll */
+    color: #e0e0e0; /* Light gray text for contrast - adjust if needed based on new bg */
+    /* Remove or comment out the old background-color and starry effect if they conflict */
+    /* background-color: #0a0a2a; */ /* Deep dark blue */
+    /* background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px); */
+    /* background-size: 40px 40px, 40px 40px; */
+    /* background-position: 0 0, 20px 20px; */
 }
 
 header {
@@ -26,7 +30,7 @@ nav {
 }
 
 nav.bg-gray-800 { /* Target specific navbar */
-    background-color: #1a1a3a !important; /* Ensure override if needed */
+    background-color: rgba(26, 26, 58, 0.9) !important; /* Semi-transparent dark blue */
     border-bottom: 1px solid #444;
 }
 
@@ -53,8 +57,7 @@ nav a:hover {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 1rem;
-    /* background-color: rgba(20, 20, 50, 0.8); Slightly lighter transparent background */
-    background-color: #1a1a3a; /* Slightly lighter solid dark blue */
+    background-color: rgba(26, 26, 58, 0.9); /* Semi-transparent dark blue */
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #444;
@@ -71,7 +74,7 @@ footer {
 }
 
 footer.bg-gray-800 { /* Target specific footer */
-    background-color: #1a1a3a !important;
+    background-color: rgba(26, 26, 58, 0.9) !important; /* Semi-transparent dark blue */
     color: #e0e0e0;
     border-top: 1px solid #444;
 }

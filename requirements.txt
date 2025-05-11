@@ -12,3 +12,4 @@ requests
 gunicorn
 beautifulsoup4 # Added for HTML parsing
 email_validator # Added for email validation
+wikipedia # Added wikipedia library
