@@ -236,3 +236,24 @@ textarea:focus {
    you can adapt the existing Tailwind grid classes. For simplicity, this CSS assumes 
    you might add a specific class like "flashcard-grid" to the container of .flashcard elements.
    However, the .flashcard styles themselves will work with Tailwind's grid too. */
+
+.deck-item-card {
+    background-color: #ffffff; /* Solid white */
+    border: 1px solid #d1d5db; /* Tailwind gray-300, for a subtle border */
+}
+
+/* Optional: If you want to center the grid of decks on the page */
+.dashboard-decks-grid {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px; /* Adjust as needed */
+}
+
+/* Ensure the main container for the dashboard content doesn't have transparency if it inherited it */
+/* You might need to adjust the selector based on your actual HTML structure for the main content area */
+/* For example, if the direct parent of the grid is the one with transparency */
+main.flex-1 {
+    /* If this element had transparency, override it or ensure its children (like .deck-item-card) have solid backgrounds */
+    /* background-color: transparent !important; */ /* This would be if you wanted to ensure it's transparent */
+    /* For now, we're focusing on the cards themselves having solid backgrounds. */
+}

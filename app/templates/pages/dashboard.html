@@ -16,7 +16,7 @@
             {% if decks %}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {% for deck in decks %}
-                <div class="bg-white p-4 rounded shadow">
+                <div class="deck-item-card bg-white p-4 rounded shadow">
                     <h2 class="font-semibold text-lg mb-2">{{ deck.title }}</h2>
                     <p class="text-sm text-gray-600 mb-1">Created on: {{ deck.timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
                     <p class="text-sm text-gray-600 mb-3">Cards: {{ deck.cards.count() }}</p>

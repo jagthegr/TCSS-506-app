@@ -74,22 +74,50 @@ class WikipediaFlashcardAgent:
     def _extract_from_summary(self, summary_text: str, max_cards: int):
         cards = []
         sentences = summary_text.split('. ') 
-        if sentences:
-            first_sentence = sentences[0]
-            page_title_for_question = self.page.title if self.page else "Topic"
-            definition_indicators = [" is ", " are ", " was ", " were "]
+        page_title_for_question = self.page.title if self.page else "Topic"
+        definition_indicators = [" is ", " are ", " was ", " were "]
+
+        for sentence in sentences:
+            if len(cards) >= max_cards:
+                break
+            
+            sentence_stripped = sentence.strip()
+            if not sentence_stripped: # Skip empty or whitespace-only sentences
+                continue
+
             found_indicator = False
             for indicator in definition_indicators:
-                if indicator in first_sentence.lower():
-                    parts = first_sentence.split(indicator, 1)
-                    front = f"What {indicator.strip()} {parts[0].strip()}?"
-                    back = parts[1].strip()
-                    if len(back) > 20:
-                         cards.append({"front": front, "back": back + "."})
-                    found_indicator = True
-                    break
-            if not found_indicator and len(first_sentence) > 30:
-                cards.append({"front": f"Summarize: {page_title_for_question}", "back": first_sentence + "."})
+                if indicator in sentence_stripped.lower():
+                    parts = sentence_stripped.split(indicator, 1)
+                    front_candidate = parts[0].strip()
+                    back_candidate = parts[1].strip()
+
+                    # Avoid creating questions for very short subjects or pronouns alone if possible
+                    # and ensure back has substance
+                    if front_candidate and len(front_candidate) < 100 and len(back_candidate) > 10:
+                        front = f"What {indicator.strip()} {front_candidate}?"
+                        
+                        # Ensure the 'back' ends with a period if it doesn't have other terminal punctuation.
+                        if back_candidate and not back_candidate.endswith(('.', '!', '?')):
+                            back_candidate += "."
+                        
+                        cards.append({"front": front, "back": back_candidate})
+                        found_indicator = True
+                        break # Found an indicator for this sentence, move to the next sentence
+            
+            if len(cards) >= max_cards: # Check again in case the last card filled max_cards
+                break
+
+        # If after iterating through sentences, no cards were made from definitions,
+        # and there was at least one sentence, try the original fallback on the first sentence.
+        if not cards and sentences and sentences[0].strip():
+            first_sentence_content = sentences[0].strip()
+            if len(first_sentence_content) > 30: # Original condition for fallback
+                back_content = first_sentence_content
+                if not back_content.endswith(('.', '!', '?')):
+                    back_content += "."
+                cards.append({"front": f"Summarize: {page_title_for_question}", "back": back_content})
+        
         return cards[:max_cards]
 
     def _extract_from_sections_content(self, page_object, max_cards_total: int):
