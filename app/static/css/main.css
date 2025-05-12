@@ -3,13 +3,17 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    /* Dark space background */
-    background-color: #0a0a2a; /* Deep dark blue */
-    /* Starry background effect (optional, can be performance intensive) */
-    /* background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
-    background-position: 0 0, 20px 20px; */
-    color: #e0e0e0; /* Light gray text for contrast */
+    background-image: url('../img/icon.jpg'); /* Set the new background image */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-attachment: fixed; /* Make the background fixed during scroll */
+    color: #e0e0e0; /* Light gray text for contrast - adjust if needed based on new bg */
+    /* Remove or comment out the old background-color and starry effect if they conflict */
+    /* background-color: #0a0a2a; */ /* Deep dark blue */
+    /* background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px); */
+    /* background-size: 40px 40px, 40px 40px; */
+    /* background-position: 0 0, 20px 20px; */
 }
 
 header {
@@ -26,7 +30,7 @@ nav {
 }
 
 nav.bg-gray-800 { /* Target specific navbar */
-    background-color: #1a1a3a !important; /* Ensure override if needed */
+    background-color: rgba(26, 26, 58, 0.9) !important; /* Semi-transparent dark blue */
     border-bottom: 1px solid #444;
 }
 
@@ -53,8 +57,7 @@ nav a:hover {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 1rem;
-    /* background-color: rgba(20, 20, 50, 0.8); Slightly lighter transparent background */
-    background-color: #1a1a3a; /* Slightly lighter solid dark blue */
+    background-color: rgba(26, 26, 58, 0.9); /* Semi-transparent dark blue */
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #444;
@@ -71,7 +74,7 @@ footer {
 }
 
 footer.bg-gray-800 { /* Target specific footer */
-    background-color: #1a1a3a !important;
+    background-color: rgba(26, 26, 58, 0.9) !important; /* Semi-transparent dark blue */
     color: #e0e0e0;
     border-top: 1px solid #444;
 }
@@ -148,4 +151,109 @@ textarea:focus {
 /* Override default browser styles if necessary */
 * {
     box-sizing: border-box;
+}
+
+/* Add this to your existing main.css or a new CSS file linked in base.html */
+
+.flashcard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 24px; /* Spacing between cards */
+    padding: 24px;
+}
+
+.flashcard {
+    background-color: transparent; /* Or your desired card background */
+    height: 280px; /* Changed from min-height to fixed height */
+    width: 100%; /* Takes full width of grid cell up to max-width */
+    max-width: 400px; /* Maximum width for a card */
+    margin-left: auto; /* Center card in grid cell */
+    margin-right: auto; /* Center card in grid cell */
+    border-radius: 0.5rem; /* Tailwind's rounded-lg */
+    perspective: 1000px; /* For 3D effect */
+    cursor: pointer;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Ensures it takes the fixed height of .flashcard */
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Tailwind's shadow-lg equivalent */
+    border-radius: 0.5rem; /* Match flashcard parent */
+}
+
+/* Apply this class when card is flipped */
+.flashcard-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%; /* Ensures faces take full fixed height */
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    border-radius: 0.5rem; /* Match flashcard parent */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Changed from center to flex-start */
+    align-items: center;
+    padding: 1.5rem; /* Tailwind's p-6 */
+    overflow-y: auto; /* Added for vertical scrolling */
+}
+
+.flashcard-front {
+    background-color: #ffffff; /* Tailwind's bg-white */
+    color: #1f2937; /* Tailwind's text-gray-800 for example */
+}
+
+.flashcard-back {
+    background-color: #f3f4f6; /* A slightly different bg for back, e.g., gray-100 */
+    color: #1f2937; /* Tailwind's text-gray-800 */
+    transform: rotateY(180deg);
+}
+
+/* Styling for the question/answer text if needed beyond Tailwind */
+.flashcard-front h3,
+.flashcard-back h3 {
+    font-size: 1.125rem; /* Tailwind's text-lg */
+    font-weight: 600; /* Tailwind's font-semibold */
+    margin-bottom: 0.5rem; /* Tailwind's mb-2 */
+    color: #4b5563; /* Tailwind's text-gray-600 or similar */
+}
+
+.flashcard-front p,
+.flashcard-back p {
+    color: #374151; /* Tailwind's text-gray-700 or similar */
+}
+
+/* Ensure the grid div in the template uses this class if you want this specific grid styling */
+/* In view_deck.html, the div with class "grid" can be changed to "flashcard-grid" or 
+   you can adapt the existing Tailwind grid classes. For simplicity, this CSS assumes 
+   you might add a specific class like "flashcard-grid" to the container of .flashcard elements.
+   However, the .flashcard styles themselves will work with Tailwind's grid too. */
+
+.deck-item-card {
+    background-color: #ffffff; /* Solid white */
+    border: 1px solid #d1d5db; /* Tailwind gray-300, for a subtle border */
+}
+
+/* Optional: If you want to center the grid of decks on the page */
+.dashboard-decks-grid {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px; /* Adjust as needed */
+}
+
+/* Ensure the main container for the dashboard content doesn't have transparency if it inherited it */
+/* You might need to adjust the selector based on your actual HTML structure for the main content area */
+/* For example, if the direct parent of the grid is the one with transparency */
+main.flex-1 {
+    /* If this element had transparency, override it or ensure its children (like .deck-item-card) have solid backgrounds */
+    /* background-color: transparent !important; */ /* This would be if you wanted to ensure it's transparent */
+    /* For now, we're focusing on the cards themselves having solid backgrounds. */
 }

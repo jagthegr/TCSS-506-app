@@ -10,3 +10,6 @@ pytest==7.1.2
 pytest-flask==1.2.0
 requests
 gunicorn
+beautifulsoup4 # Added for HTML parsing
+email_validator # Added for email validation
+wikipedia # Added wikipedia library

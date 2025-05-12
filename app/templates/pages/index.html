@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Modern Flask App</title>
+    <title>Welcome to FlashCard Hub</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
@@ -11,23 +11,80 @@
     {% include 'components/navbar.html' %}
     
     <main class="container mx-auto p-4">
-        <h1 class="text-4xl font-bold text-center mb-6">Welcome to the Modern Flask App</h1>
-        <p class="text-lg text-center mb-4">This application showcases a modern design using Flask and Tailwind CSS.</p>
+        <h1 class="text-4xl font-bold text-center mb-6">Welcome to FlashCard Hub!</h1>
+        <p class="text-lg text-center mb-8">Automatically generate flashcards from Wikipedia topics. Here's how our Wikipedia Agent works:</p>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-2xl font-semibold">Feature 1</h2>
-                <p class="mt-2">Description of feature 1.</p>
+                <h2 class="text-2xl font-semibold mb-3">1. You Tell the Agent What to Learn About</h2>
+                <p class="mt-2">Simply provide the topic you're interested in (e.g., "Penguins") and tell the agent roughly how many flashcards you'd like to generate.</p>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-2xl font-semibold">Feature 2</h2>
-                <p class="mt-2">Description of feature 2.</p>
+                <h2 class="text-2xl font-semibold mb-3">2. The Agent Goes to Wikipedia</h2>
+                <p class="mt-2">Our agent uses a special Python tool (the <code>wikipedia</code> library) to connect directly to Wikipedia's vast database. This is its way of using the official Wikimedia API.</p>
+                <ul class="list-disc list-inside mt-2 text-gray-700">
+                    <li><strong>Finding the Right Page:</strong> It searches for your topic and fetches the most relevant Wikipedia page. It can even handle ambiguous topics by trying to pick the best option.</li>
+                </ul>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-2xl font-semibold">Feature 3</h2>
-                <p class="mt-2">Description of feature 3.</p>
+                <h2 class="text-2xl font-semibold mb-3">3. Smart Flashcard Creation</h2>
+                <p class="mt-2">Once it has the page, the agent intelligently reads it to create flashcards using different strategies:</p>
+                <ul class="list-disc list-inside mt-2 text-gray-700">
+                    <li><strong>From the Summary:</strong> It looks for key definition sentences (like "...is a...") in the page summary to create question/answer pairs.</li>
+                    <li><strong>From Section Details:</strong> It examines important section titles and their content (e.g., "Habitat," "Diet") to generate more detailed flashcards, skipping irrelevant sections like "References."</li>
+                </ul>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold mb-3">4. Tidying Up the Flashcards</h2>
+                <p class="mt-2">After generating potential flashcards, the agent refines them:</p>
+                <ul class="list-disc list-inside mt-2 text-gray-700">
+                    <li>Removes duplicates.</li>
+                    <li>Ensures questions and answers are a useful length.</li>
+                    <li>Delivers the desired number of high-quality flashcards.</li>
+                </ul>
             </div>
         </div>
+
+        <div class="text-center mt-8">
+            <a href="{{ url_for('main.generate_flashcards') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
+                Generate Flashcards Now
+            </a>
+        </div>
+
+        <hr class="my-12 border-gray-300">
+
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md mt-10">
+            <h2 class="text-3xl font-semibold mb-4 text-center">Behind the Scenes: Flask App Integration</h2>
+            <p class="text-md text-gray-700 mb-4 text-center">For the technically curious, here’s how the Wikipedia Agent is integrated into our Flask web application:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-2">1. New Flask Route</h3>
+                    <p class="text-gray-600">A dedicated route (like <code>/generate_flashcards</code>) is set up in our Flask app. This route listens for user requests to create flashcards, typically receiving a topic from a web form.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-2">2. Calling the Agent</h3>
+                    <p class="text-gray-600">When you submit a topic, this route does the following:</p>
+                    <ul class="list-disc list-inside mt-2 text-gray-600 pl-4">
+                        <li>Instantiates our <code>WikipediaFlashcardAgent</code>.</li>
+                        <li>Calls the agent's <code>generate_flashcards()</code> method, passing in the user's topic and the desired number of cards.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-2">3. Processing Results & Database Interaction</h3>
+                    <p class="text-gray-600">The agent returns a list of flashcards (each with a 'front' and 'back'). The Flask app then:</p>
+                    <ul class="list-disc list-inside mt-2 text-gray-600 pl-4">
+                        <li>Creates a new 'Deck' in our database for the user (e.g., "Flashcards on Penguins").</li>
+                        <li>For each flashcard dictionary received from the agent, it creates a 'Card' object in the database.</li>
+                        <li>These new cards are linked to the newly created deck and to your user account.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-2">4. User Feedback</h3>
+                    <p class="text-gray-600">Finally, after successfully creating and saving the deck and cards, the app redirects you to view your new flashcard deck or displays a success message, so you know everything worked!</p>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     {% include 'components/footer.html' %}
