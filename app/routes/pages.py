@@ -168,18 +168,28 @@ def generate_flashcards():
 
 # In your Flask app (example)
 @main.route('/deck/<int:deck_id>/add_card', methods=['POST'])
-def add_card(deck):
+def add_card(deck_id):
     question = request.form['question']
     answer = request.form['answer']
 
-    new_card = Card(question=question, answer=answer, deck=deck.id)
+    new_card = Card(question=question, answer=answer, deck_id=deck_id)
     db.session.add(new_card)
     
     db.session.commit()
-    flash(f'new flashcard added to "{deck.id}"', 'success')
-    return redirect(url_for('main.view_deck', deck_id=deck.id)) # Redirect to the new deck
+    flash(f'new flashcard added to "{deck_id}"', 'success')
+    return redirect(url_for('main.view_deck', deck_id=deck_id)) # Redirect to the new deck
 
 @main.route('/deck/<int:deck_id>/delete_card/<int:card_id>', methods=['POST'])
 def delete_card(deck_id, card_id):
-    # Delete card from DB logic here
+    card = Card.query.get_or_404(card_id)
+    try:
+        db.session.delete(card) # The cascade delete in the model will handle associated cards
+        db.session.commit()
+        flash(f'Deck "{card.id}" has been deleted successfully.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error deleting deck "{card.title}": {str(e)}', 'danger')
+        # Log the error e for debugging
+        print(f"Error deleting deck: {e}")
+
     return redirect(url_for('main.view_deck', deck_id=deck_id))

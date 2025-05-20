@@ -45,7 +45,7 @@
                 <h2 class="text-xl font-semibold text-gray-800">Add a New Flashcard</h2>
                 <button onclick="hideAddCardForm()" class="text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
             </div>
-            <form method="POST" action="{{ url_for('main.add_card', deck=deck) }}">
+            <form method="POST" action="{{ url_for('main.add_card', deck_id=deck.id) }}">
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="question">Question</label>
                     <input class="w-full p-2 border rounded" type="text" id="question" name="question" required>
