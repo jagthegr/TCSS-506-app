@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block title %}{{ title }}{% endblock %}
-
 {% block content %}
     <h1>{{ title }}</h1>
     <form action="" method="post" novalidate class="space-y-4">
@@ -22,7 +21,7 @@
             {% endfor %}</p>
         </div>
         <p>{{ form.remember_me() }} {{ form.remember_me.label(class="ml-2 text-sm") }}</p>
-        <p>{{ form.submit(class = "form.submit") }}</p>
+        <p>{{ form.submit(class = "form-submit") }}</p>
     </form>
     <p class="mt-4">New User? <a href="{{ url_for('main.register') }}" class="text-blue-500 hover:underline">Click to Register!</a></p>
 {% endblock %}
