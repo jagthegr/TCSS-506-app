@@ -165,3 +165,21 @@ def generate_flashcards():
                         pass
             
     return render_template('pages/generate_flashcards.html', title='Generate Flashcards', form=form)
+
+# In your Flask app (example)
+@main.route('/deck/<int:deck_id>/add_card', methods=['POST'])
+def add_card(deck):
+    question = request.form['question']
+    answer = request.form['answer']
+
+    new_card = Card(question=question, answer=answer, deck=deck.id)
+    db.session.add(new_card)
+    
+    db.session.commit()
+    flash(f'new flashcard added to "{deck.id}"', 'success')
+    return redirect(url_for('main.view_deck', deck_id=deck.id)) # Redirect to the new deck
+
+@main.route('/deck/<int:deck_id>/delete_card/<int:card_id>', methods=['POST'])
+def delete_card(deck_id, card_id):
+    # Delete card from DB logic here
+    return redirect(url_for('main.view_deck', deck_id=deck_id))
