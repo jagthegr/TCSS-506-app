@@ -1,47 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <title>Dashboard</title>
-</head>
-<body class="bg-gray-100">
-    {% include 'components/navbar.html' %}
-    <div class="flex">
-        {% include 'components/sidebar.html' %}
-        <main class="flex-1 p-6">
-            <h1 class="text-2xl font-bold mb-4">My Flashcard Decks</h1>
-            {% if decks %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {% for deck in decks %}
-                <div class="deck-item-card bg-white p-4 rounded shadow">
-                    <h2 class="font-semibold text-lg mb-2">{{ deck.title }}</h2>
-                    <p class="text-sm text-gray-600 mb-1">Created on: {{ deck.timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
-                    <p class="text-sm text-gray-600 mb-3">Cards: {{ deck.cards.count() }}</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <a href="{{ url_for('main.view_deck', deck_id=deck.id) }}" class="text-blue-500 hover:underline">View Deck</a>
-                        <form method="POST" action="{{ url_for('main.delete_deck', deck_id=deck.id) }}" class="delete-deck-form">
-                            {{ form.hidden_tag() if form }} {# Include CSRF token if forms generally use it #}
-                            <button type="submit" class="text-red-500 hover:text-red-700 hover:underline text-sm">Delete Deck</button>
-                        </form>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="bg-white p-6 rounded shadow text-center">
-                <h2 class="text-xl font-semibold mb-2">No Decks Yet!</h2>
-                <p class="text-gray-600 mb-4">You haven't generated any flashcard decks.</p>
-                <a href="{{ url_for('main.generate_flashcards') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Generate Your First Deck
-                </a>
-            </div>
-            {% endif %}
-        </main>
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">My Flashcard Decks</h1>
+{% if decks %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for deck in decks %}
+    <div class="deck-item-card bg-white p-4 rounded shadow">
+        <h2 class="font-semibold text-lg mb-2">{{ deck.title }}</h2>
+        <p class="text-sm text-gray-600 mb-1">Created on: {{ deck.timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p class="text-sm text-gray-600 mb-3">Cards: {{ deck.cards.count() }}</p>
+        <div class="mt-4 flex justify-between items-center">
+            <a href="{{ url_for('main.view_deck', deck_id=deck.id) }}" class="text-blue-500 hover:underline">View Deck</a>
+            <form method="POST" action="{{ url_for('main.delete_deck', deck_id=deck.id) }}" class="delete-deck-form">
+                {{ form.hidden_tag() if form }}
+                <button type="submit" class="text-red-500 hover:text-red-700 hover:underline text-sm">Delete Deck</button>
+            </form>
+        </div>
     </div>
-    {% include 'components/footer.html' %}
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+    {% endfor %}
+</div>
+{% else %}
+<div class="bg-white p-6 rounded shadow text-center">
+    <h2 class="text-xl font-semibold mb-2">No Decks Yet!</h2>
+    <p class="text-gray-600 mb-4">You haven't generated any flashcard decks.</p>
+    <a href="{{ url_for('main.generate_flashcards') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Generate Your First Deck
+    </a>
+</div>
+{% endif %}
+{% endblock %}
