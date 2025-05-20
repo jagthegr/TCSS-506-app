@@ -8,24 +8,23 @@
     <title>Navbar</title>
 </head>
 <body>
-    <nav class="bg-gray-800 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="{{ url_for('main.index') }}" class="text-white text-lg font-bold">
-                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" class="h-8 inline-block mr-2"> Flashcard Hub
-            </a>
-            <div class="flex space-x-4">
-                <a href="{{ url_for('main.index') }}" class="text-gray-300 hover:text-white">Home</a>
-                {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.dashboard') }}" class="text-gray-300 hover:text-white">Dashboard</a>
-                <a href="{{ url_for('main.generate_flashcards') }}" class="text-gray-300 hover:text-white">Generate Flashcards</a>
-                <a href="{{ url_for('main.logout') }}" class="text-gray-300 hover:text-white">Logout</a>
-                {% else %}
-                <a href="{{ url_for('main.login') }}" class="text-gray-300 hover:text-white">Login</a>
-                <a href="{{ url_for('main.register') }}" class="text-gray-300 hover:text-white">Register</a>
-                {% endif %}
-                <a href="#" class="text-gray-300 hover:text-white">About</a>
-                <a href="#" class="text-gray-300 hover:text-white">Contact</a>
-            </div>
+    <nav class="container">
+        <div class="main-logo">
+            <a href="{{ url_for('main.index') }}" ><img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo"> Flashcard Hub</a>
+        </div>
+        
+        <div class="nav-links">
+            <a href="{{ url_for('main.index') }}" class="nav-item">Home</a>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.dashboard') }}" class="nav-item">Dashboard</a>
+            <a href="{{ url_for('main.generate_flashcards') }}" class="nav-item">Generate Flashcards</a>
+            <a href="{{ url_for('main.logout') }}" class="nav-item">Logout</a>
+            {% else %}
+            <a href="{{ url_for('main.login') }}" class="nav-item">Login</a>
+            <a href="{{ url_for('main.register') }}" class="nav-item">Register</a>
+            {% endif %}
+            <a href="#" class="nav-item">About</a>
+            <a href="#" class="nav-item">Contact</a>
         </div>
     </nav>
 </body>
