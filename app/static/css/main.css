@@ -92,3 +92,38 @@ nav {
     color: #ffffff; /* White on hover */
     transition: all 0.2s ease;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form .field {
+    margin: 1rem 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+form p {
+    font-size: 20pt;
+    color: #ffffff; /* White for form labels */
+    margin: auto;
+    padding-bottom: 5px;
+}
+
+.input-text {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.form.submit {
+    background-color: #b2d9e6; /* Bright blue for submit button */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
