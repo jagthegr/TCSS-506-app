@@ -20,7 +20,8 @@ h1 {
 
 .container {
     max-width: 1200px;
-    margin: 2rem auto;
+    min-height: fit-content;
+    margin: 2rem;
     padding: 1rem;
     background-color: rgba(26, 26, 58, 0.7); /* Semi-transparent dark blue */
     border-radius: 8px;
