@@ -7,19 +7,14 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    ports:
-      - 5000:5000
     expose:
-      - "5000"
-    # networks:
-    #   my-network:
-    #     aliases:
-    #       - web
-    #   nginx:
-    #     image: nginx:latest
-    #     volumes:
-    #       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    #     ports:
-    #       - "80:80"
-    #     depends_on:
-    #       - web
+      - "5000" # This is the exposure for ports within the docker network. 
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80" # This is the exposure for ports outside the docker network.
+    depends_on:
+      - web
