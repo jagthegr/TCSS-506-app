@@ -3,257 +3,93 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('../img/icon.jpg'); /* Set the new background image */
+    background-color: rgba(109, 109, 153, 0.9) !important; /* Semi-transparent dark blue */
     background-size: cover; /* Cover the entire viewport */
     background-position: center center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-attachment: fixed; /* Make the background fixed during scroll */
     color: #e0e0e0; /* Light gray text for contrast - adjust if needed based on new bg */
-    /* Remove or comment out the old background-color and starry effect if they conflict */
-    /* background-color: #0a0a2a; */ /* Deep dark blue */
-    /* background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px); */
-    /* background-size: 40px 40px, 40px 40px; */
-    /* background-position: 0 0, 20px 20px; */
 }
 
-header {
-    background-color: #007bff;
-    color: white;
-    padding: 1rem;
+h1 {
+    font-size: 2.5rem;
+    color: #ffffff; /* White for headings */
     text-align: center;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-}
-
-nav.bg-gray-800 { /* Target specific navbar */
-    background-color: rgba(26, 26, 58, 0.9) !important; /* Semi-transparent dark blue */
-    border-bottom: 1px solid #444;
-}
-
-nav a.text-gray-300 { /* Target specific navbar links */
-    color: #b0c4de !important; /* Light steel blue */
-}
-
-nav a.text-gray-300:hover {
-    color: #FFFACD !important; /* Lemon chiffon on hover */
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 1rem;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: #ffc107;
+    margin-top: 20px;
 }
 
 .container {
     max-width: 1200px;
+    min-height: fit-content;
+    margin: 2rem;
+    padding: 1rem;
+    background-color: rgba(26, 26, 58, 0.7); /* Semi-transparent dark blue */
+    border-radius: 8px;
+}
+
+a {
+    color: #b2d9e6; /* Bright blue for links */
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    padding: 1rem;
+    border-radius: 8px;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
+
+.main-logo {
+    height: auto;
+    font-size: 30pt;
+    font-weight: bold;
+}
+
+.nav-links {
+    font-size: 20pt;
+}
+
+.nav-item {
+    margin-left: 20px;
+    color: #b2d9e6; /* Bright blue for links */
+}
+.nav-item:hover {
+    text-decoration: none;
+    color: #ffffff; /* White on hover */
+    transition: all 0.2s ease;
+    background-color: #b2d9e6;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.container-button {
+    display: flex;
+    justify-content: center;
+    font-size: 25pt;
+
+    max-width: fit-content;
     margin: 2rem auto;
     padding: 1rem;
-    background-color: rgba(26, 26, 58, 0.9); /* Semi-transparent dark blue */
+    background-color: rgba(26, 26, 58, 0.7); /* Semi-transparent dark blue */
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    border: 1px solid #444;
 }
-
-footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #343a40;
-    color: white;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-footer.bg-gray-800 { /* Target specific footer */
-    background-color: rgba(26, 26, 58, 0.9) !important; /* Semi-transparent dark blue */
-    color: #e0e0e0;
-    border-top: 1px solid #444;
-}
-
-footer a {
-    color: #87CEFA !important;
-}
-
-footer a:hover {
-    color: #FFFACD !important;
-}
-
-.btn,
-.bg-blue-500 { /* Target Tailwind class used for buttons */
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    margin: 0.5rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #4682B4; /* Steel blue */
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-.btn:hover,
-.hover\:bg-blue-600:hover { /* Target Tailwind class */
-    background-color: #5A9BD5; /* Lighter steel blue */
-}
-
-/* Adjust link colors for visibility */
-a,
-.text-blue-500 { /* Target Tailwind class used for links */
-    color: #87CEFA; /* Light sky blue */
-    transition: color 0.3s;
-}
-
-a:hover,
-.hover\:underline:hover { /* Target Tailwind class */
-    color: #FFFACD; /* Lemon chiffon - like a distant star */
-    text-decoration: underline;
-}
-
-/* Specific adjustments for search results page */
-.search-results h1, .search-results h2 {
-    color: #ffffff; /* Brighter white for headings */
-}
-
-.search-results p {
-    color: #c0c0c0; /* Slightly dimmer text for snippets */
-}
-
-/* Ensure input fields are visible */
-input[type="text"],
-input[type="password"],
-input[type="email"],
-textarea {
-    background-color: #2a2a4a;
-    color: #e0e0e0;
-    border: 1px solid #444;
-    padding: 0.5rem;
-    border-radius: 4px;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-textarea:focus {
-    outline: none;
-    border-color: #87CEFA;
-    box-shadow: 0 0 5px rgba(135, 206, 250, 0.5);
-}
-
-/* Override default browser styles if necessary */
-* {
-    box-sizing: border-box;
-}
-
-/* Add this to your existing main.css or a new CSS file linked in base.html */
-
-.flashcard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
-    gap: 24px; /* Spacing between cards */
-    padding: 24px;
-}
-
-.flashcard {
-    background-color: transparent; /* Or your desired card background */
-    height: 280px; /* Changed from min-height to fixed height */
-    width: 100%; /* Takes full width of grid cell up to max-width */
-    max-width: 400px; /* Maximum width for a card */
-    margin-left: auto; /* Center card in grid cell */
-    margin-right: auto; /* Center card in grid cell */
-    border-radius: 0.5rem; /* Tailwind's rounded-lg */
-    perspective: 1000px; /* For 3D effect */
-    cursor: pointer;
-}
-
-.flashcard-inner {
-    position: relative;
-    width: 100%;
-    height: 100%; /* Ensures it takes the fixed height of .flashcard */
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Tailwind's shadow-lg equivalent */
-    border-radius: 0.5rem; /* Match flashcard parent */
-}
-
-/* Apply this class when card is flipped */
-.flashcard-inner.is-flipped {
-    transform: rotateY(180deg);
-}
-
-.flashcard-front,
-.flashcard-back {
-    position: absolute;
-    width: 100%;
-    height: 100%; /* Ensures faces take full fixed height */
-    -webkit-backface-visibility: hidden; /* Safari */
-    backface-visibility: hidden;
-    border-radius: 0.5rem; /* Match flashcard parent */
+.container-button:hover {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Changed from center to flex-start */
-    align-items: center;
-    padding: 1.5rem; /* Tailwind's p-6 */
-    overflow-y: auto; /* Added for vertical scrolling */
-}
+    justify-content: center;
+    font-size: 25pt;
 
-.flashcard-front {
-    background-color: #ffffff; /* Tailwind's bg-white */
-    color: #1f2937; /* Tailwind's text-gray-800 for example */
-}
-
-.flashcard-back {
-    background-color: #f3f4f6; /* A slightly different bg for back, e.g., gray-100 */
-    color: #1f2937; /* Tailwind's text-gray-800 */
-    transform: rotateY(180deg);
-}
-
-/* Styling for the question/answer text if needed beyond Tailwind */
-.flashcard-front h3,
-.flashcard-back h3 {
-    font-size: 1.125rem; /* Tailwind's text-lg */
-    font-weight: 600; /* Tailwind's font-semibold */
-    margin-bottom: 0.5rem; /* Tailwind's mb-2 */
-    color: #4b5563; /* Tailwind's text-gray-600 or similar */
-}
-
-.flashcard-front p,
-.flashcard-back p {
-    color: #374151; /* Tailwind's text-gray-700 or similar */
-}
-
-/* Ensure the grid div in the template uses this class if you want this specific grid styling */
-/* In view_deck.html, the div with class "grid" can be changed to "flashcard-grid" or 
-   you can adapt the existing Tailwind grid classes. For simplicity, this CSS assumes 
-   you might add a specific class like "flashcard-grid" to the container of .flashcard elements.
-   However, the .flashcard styles themselves will work with Tailwind's grid too. */
-
-.deck-item-card {
-    background-color: #ffffff; /* Solid white */
-    border: 1px solid #d1d5db; /* Tailwind gray-300, for a subtle border */
-}
-
-/* Optional: If you want to center the grid of decks on the page */
-.dashboard-decks-grid {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1200px; /* Adjust as needed */
-}
-
-/* Ensure the main container for the dashboard content doesn't have transparency if it inherited it */
-/* You might need to adjust the selector based on your actual HTML structure for the main content area */
-/* For example, if the direct parent of the grid is the one with transparency */
-main.flex-1 {
-    /* If this element had transparency, override it or ensure its children (like .deck-item-card) have solid backgrounds */
-    /* background-color: transparent !important; */ /* This would be if you wanted to ensure it's transparent */
-    /* For now, we're focusing on the cards themselves having solid backgrounds. */
+    max-width: fit-content;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: rgba(108, 108, 190, 0.7); /* Semi-transparent dark blue */
+    border-radius: 8px;
+    color: #ffffff; /* White on hover */
+    transition: all 0.2s ease;
 }
