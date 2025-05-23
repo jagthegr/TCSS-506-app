@@ -1,22 +1,21 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.12-slim-bookworm
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the requirements file into the container at /app
-COPY requirements.txt .
+COPY . /app
 
 # Install any needed packages specified in requirements.txt
 # Use --no-cache-dir to reduce image size
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code into the container at /app
-COPY . .
 
-# Make port 5002 available to the world outside this container
+# Make port 5000 available to the world outside this container
 # (Gunicorn default port, can be overridden)
-EXPOSE 5002
+EXPOSE 5000
 
 # Define environment variables (optional, can be set at runtime)
 # ENV FLASK_APP=run.py
@@ -26,4 +25,4 @@ EXPOSE 5002
 # Command to run the application using Gunicorn
 # Bind to 0.0.0.0 so it's accessible from outside the container
 # run:app refers to the 'app' variable in 'run.py'
-CMD ["gunicorn", "--bind", "0.0.0.0:5002", "run:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "run:app"]
