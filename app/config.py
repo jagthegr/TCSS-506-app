@@ -1,6 +1,8 @@
 class Config:
-    SECRET_KEY = 'your_secret_key_here'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+    SECRET_KEY = "your_secret_key_here"
+    SQLALCHEMY_DATABASE_URI = (
+        "postgresql+psycopg2://postgres:password@localhost:5432/prod"
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
     # Add other configuration variables as needed
