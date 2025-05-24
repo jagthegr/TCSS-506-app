@@ -18,3 +18,18 @@ services:
       - "80:80" # This is the exposure for ports outside the docker network.
     depends_on:
       - web
+
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    expose:
+      - "5432" # This is the exposure for ports within the docker network.
+    ports:
+      - "8080:5432"
+
+volumes:
+  pg-data:
+    driver: local
