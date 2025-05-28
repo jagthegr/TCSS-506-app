@@ -253,3 +253,8 @@ def delete_card(deck_id, card_id):
         print(f"Error deleting deck: {e}")
 
     return redirect(url_for("main.view_deck", deck_id=deck_id))
+
+
+@main.route("/about")
+def about_page():
+    return render_template("./pages/about.html")
