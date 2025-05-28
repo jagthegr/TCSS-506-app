@@ -61,6 +61,54 @@
                     </div>
                 </div>
             </div>
+            <!--ABOUT SECTION-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAbout">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseAbout" aria-expanded="false" aria-controls="collapseAbout">
+                        About
+                    </button>
+                </h2>
+                <div id="collapseAbout" class="accordion-collapse collapse" aria-labelledby="headingAbout"
+                    data-bs-parent="#aboutAccordion">
+                    <div class="accordion-body">
+                        <p>FlashCard Hub was developed as a class project in TCSS 506 at UW Tacoma. The idea was
+                            developed by CTRL+ALT+ELITE. The members of CTRL+ALT+ELITE are: </p>
+                        <table class="table table-borderless custom-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">James Goodwin</th>
+                                    <td><a href="https://github.com/jagthegr"><img
+                                                src="{{ url_for('static', filename='/img/github-brands.svg') }}"
+                                                width="30px" height="30px"> </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Maddy Whitney</th>
+                                    <td><a href=https://github.com/madswh><img
+                                                src="{{ url_for('static', filename='/img/github-brands.svg') }}"
+                                                width="30px" height="30px"> </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Sean Warlick </th>
+                                    <td><a href="https://github.com/warlicks"><img
+                                                src="{{ url_for('static', filename='/img/github-brands.svg') }}"
+                                                width="30px" height="30px"> </a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p> The source code for FlashCard Hub can be found on <a
+                                href=https://github.com/jagthegr/TCSS-506-app>GitHub</a></p>
+                    </div>
+                </div>
+            </div>
             <!-- Behind the Scenes Section -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingBehind">
