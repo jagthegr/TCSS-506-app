@@ -34,4 +34,4 @@ jobs:
         pytest
     - name: Build Docker
       run: |
-        docker build -flashcard-hub:latest .
+        docker build -t flashcard-hub:latest .
