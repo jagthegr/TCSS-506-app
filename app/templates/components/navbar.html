@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <title>Navbar</title>
 </head>
+
 <body>
     <nav class="container">
         <div class="main-logo">
-            <a href="{{ url_for('main.index') }}" ><img src="{{ url_for('static', filename='/img/icon.jpg') }}" width="50px" height="50px" border-radius="25px" alt="Logo"> Flashcard Hub</a>
+            <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='/img/icon.jpg') }}"
+                    width="50px" height="50px" border-radius="25px" alt="Logo"> Flashcard Hub</a>
         </div>
-        
+
         <div class="nav-links">
             <a href="{{ url_for('main.index') }}" class="nav-item">Home</a>
             {% if current_user.is_authenticated %}
@@ -23,9 +26,10 @@
             <a href="{{ url_for('main.login') }}" class="nav-item">Login</a>
             <a href="{{ url_for('main.register') }}" class="nav-item">Register</a>
             {% endif %}
-            <a href="#" class="nav-item">About</a>
+            <a href="{{ url_for('main.about_page') }}" class="nav-item">About</a>
             <a href="#" class="nav-item">Contact</a>
         </div>
     </nav>
 </body>
+
 </html>

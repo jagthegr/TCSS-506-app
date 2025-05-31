@@ -49,7 +49,7 @@ def login():
         if (
             not next_page or url_parse(next_page).netloc != ""
         ):  # Security check for next_page
-            next_page = url_for("main.index")
+            next_page = url_for("main.dashboard")
         return redirect(next_page)
     return render_template("pages/login.html", title="Sign In", form=form)
 
@@ -253,3 +253,8 @@ def delete_card(deck_id, card_id):
         print(f"Error deleting deck: {e}")
 
     return redirect(url_for("main.view_deck", deck_id=deck_id))
+
+
+@main.route("/about")
+def about_page():
+    return render_template("./pages/about.html")
