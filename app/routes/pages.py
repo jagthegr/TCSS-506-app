@@ -37,6 +37,22 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('main.index'))
 
+@main.route('/delete_account', methods=['POST', 'GET'])
+@login_required
+def delete_account():
+    if current_user.is_authenticated:
+        try:
+            db.session.delete(current_user)  # This will cascade delete associated decks and cards
+            db.session.commit()
+            flash('Your account has been deleted successfully.', 'success')
+            return redirect(url_for('main.index'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error deleting account: {str(e)}', 'danger')
+            # Log the error e for debugging
+            print(f"Error deleting account: {e}")
+            return redirect(url_for('main.profile'))
+
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
