@@ -1,4 +1,8 @@
 import wikipedia # Python Wikipedia library (or similar)
+import logging
+import requests.exceptions
+import requests # For potential timeout exceptions from wikipedia library
+
 # Potentially import NLP libraries like NLTK or spaCy if you go deeper
 
 class WikipediaFlashcardAgent:
@@ -151,3 +155,38 @@ class WikipediaFlashcardAgent:
                     unique_cards.append(card)
                     seen_fronts.add(card['front'])
         return unique_cards[:num_desired]
+
+# Moved the function outside the class
+def get_wikipedia_page_content_for_llm(topic: str) -> str | None:
+    """
+    Fetches the plain text content of a Wikipedia page for a given topic.
+    Designed to provide context for an LLM.
+    """
+    try:
+        # Attempt to get the page directly
+        # Set a shorter timeout for requests to avoid long hangs
+        # wikipedia.set_timeout(10) # Temporarily removed due to AttributeError
+        page = wikipedia.page(topic, auto_suggest=False, redirect=True) # Changed auto_suggest to False
+        logging.info(f"Successfully fetched Wikipedia page '{page.title}' for topic '{topic}'.")
+        return page.content
+    except wikipedia.exceptions.PageError:
+        logging.warning(f"Wikipedia page not found for topic: {topic}")
+        return None
+    except wikipedia.exceptions.DisambiguationError as e:
+        logging.warning(f"Topic '{topic}' is ambiguous. Options: {e.options[:3]}")
+        # Try to fetch the first disambiguation option if available
+        if e.options:
+            try:
+                page = wikipedia.page(e.options[0], auto_suggest=False, redirect=True)
+                logging.info(f"Using first disambiguation option '{page.title}' for topic '{topic}'.")
+                return page.content
+            except Exception as inner_e:
+                logging.error(f"Could not fetch disambiguated page '{e.options[0]}': {inner_e}")
+                return None
+        return None
+    except requests.exceptions.Timeout:
+        logging.error(f"Timeout occurred while fetching Wikipedia page for topic: {topic}")
+        return None
+    except Exception as e:
+        logging.error(f"An unexpected error ({type(e).__name__}) occurred while fetching Wikipedia content for '{topic}': {e}")
+        return None
