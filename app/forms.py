@@ -6,6 +6,7 @@ from wtforms import (
     SubmitField,
     TextAreaField,
     IntegerField,
+    RadioField,  # Added RadioField
 )
 from wtforms.validators import (
     DataRequired,
@@ -13,7 +14,7 @@ from wtforms.validators import (
     EqualTo,
     Length,
     ValidationError,
-    NumberRange,
+    NumberRange,  # Added NumberRange
 )
 from app.models import Member  # Assuming User model is in app/models/__init__.py
 
@@ -55,5 +56,14 @@ class GenerateFlashcardsForm(FlaskForm):
         "Number of Cards",
         validators=[DataRequired(), NumberRange(min=1, max=50)],
         default=10,
+    )
+    generation_source = RadioField(
+        "Generation Source",
+        choices=[
+            ("wikipedia", "Wikipedia (Agent)"),
+            ("llm_wikipedia", "LLM (from Wikipedia Content)"),  # New option
+        ],
+        default="wikipedia",
+        validators=[DataRequired()],
     )
     submit = SubmitField("Generate Flashcards")

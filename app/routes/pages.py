@@ -17,6 +17,8 @@ from ..utils.wikimedia import (
     search_wikimedia,
     generate_flashcards_from_topic_agent,
 )  # Updated imports
+from ..utils.wikipedia_agent import get_wikipedia_page_content_for_llm # Import new helper
+from ..utils.llm_flashcard_generator import generate_llm_flashcards # Added LLM import
 from app import db  # Import db instance
 from app.forms import (
     LoginForm,
@@ -26,6 +28,7 @@ from app.forms import (
 from app.models import Member, Deck, Card  # Added Deck and Card
 
 from werkzeug.urls import url_parse  # Helper for redirect security
+import logging # Import logging
 
 
 @main.route("/")
@@ -179,54 +182,71 @@ def generate_flashcards():
     form = GenerateFlashcardsForm()
     if form.validate_on_submit():
         topic = form.topic.data
-        num_cards = (
-            form.num_cards.data
-        )  # Assuming your form has a field for number of cards
+        num_cards = form.num_cards.data
+        source = form.generation_source.data
 
-        # Use the new agent-based function
-        extracted_cards = generate_flashcards_from_topic_agent(
-            topic, num_cards_desired=num_cards
-        )
+        extracted_cards = []
+        deck_title_prefix = ""
+
+        if source == 'wikipedia':
+            deck_title_prefix = f"Flashcards on {topic} (Wikipedia)"
+            # This agent returns list of tuples: (question, answer)
+            raw_wiki_cards = generate_flashcards_from_topic_agent(
+                topic, num_cards_desired=num_cards
+            )
+            # Convert to list of dicts for consistency, if needed, or handle differently in loop
+            if raw_wiki_cards:
+                for q, a in raw_wiki_cards:
+                    extracted_cards.append({"front": q, "back": a})
+        elif source == 'llm_wikipedia': # New option handler
+            deck_title_prefix = f"Flashcards on {topic} (LLM from Wikipedia)"
+            logging.info(f"Attempting to generate flashcards for '{topic}' using LLM from Wikipedia content.")
+            wikipedia_content = get_wikipedia_page_content_for_llm(topic)
+            if wikipedia_content:
+                logging.info(f"Successfully fetched Wikipedia content for '{topic}' ({len(wikipedia_content)} chars). Now generating LLM flashcards.")
+                extracted_cards = generate_llm_flashcards(wikipedia_content, num_flashcards=num_cards)
+            else:
+                logging.warning(f"Failed to fetch Wikipedia content for '{topic}'. Cannot generate LLM flashcards from Wikipedia.")
+                flash(f"Could not retrieve Wikipedia content for '{topic}'. Please try a different topic or source.", "warning")
+                return redirect(url_for("main.generate_flashcards"))
+        else:
+            flash("Invalid generation source selected.", "danger")
+            return redirect(url_for("main.generate_flashcards"))
 
         if not extracted_cards:
             flash(
-                f'Could not generate any flashcards for "{topic}". The Wikipedia page might not exist, be ambiguous, or the content may not be suitable for flashcard generation. Please try a different topic.',
+                f'Could not generate any flashcards for "{topic}" using {source.upper()}. The topic might not exist, be ambiguous, or the content may not be suitable for flashcard generation. Please try a different topic or source.',
                 "warning",
             )
             return redirect(url_for("main.generate_flashcards"))
 
         try:
-            # Create a new Deck
-            new_deck = Deck(title=f"Flashcards on {topic} (Agent)", author=current_user)
+            new_deck = Deck(title=deck_title_prefix, author=current_user)
             db.session.add(new_deck)
-            # Flush to get new_deck.id for cards if needed, though direct association should work
-            # db.session.flush()
 
-            for card_tuple in extracted_cards:  # Now card_tuple is (question, answer)
-                if isinstance(card_tuple, tuple) and len(card_tuple) == 2:
-                    question_text = card_tuple[0]
-                    answer_text = card_tuple[1]
+            for card_data in extracted_cards:  # card_data is now a dict
+                if isinstance(card_data, dict) and "front" in card_data and "back" in card_data:
                     new_card = Card(
-                        question=question_text, answer=answer_text, deck=new_deck
+                        question=card_data["front"],
+                        answer=card_data["back"],
+                        deck=new_deck
                     )
                     db.session.add(new_card)
                 else:
-                    # Log or handle malformed tuple if necessary
-                    print(f"Skipping malformed card data: {card_tuple}")
+                    print(f"Skipping malformed card data: {card_data} from {source}")
 
             db.session.commit()
             flash(
-                f'{len(extracted_cards)} flashcards generated for "{topic}" using the agent and saved to a new deck!',
+                f'{len(extracted_cards)} flashcards generated for "{topic}" using {source.upper()} and saved to a new deck!',
                 "success",
             )
             return redirect(
                 url_for("main.view_deck", deck_id=new_deck.id)
-            )  # Redirect to the new deck
+            )
         except Exception as e:
             db.session.rollback()
             flash(f"An error occurred while saving flashcards: {str(e)}", "danger")
-            # Log the error e for debugging
-            print(f"Error saving agent-generated flashcards: {e}")
+            print(f"Error saving {source}-generated flashcards: {e}")
             return redirect(url_for("main.generate_flashcards"))
     else:
         if request.method == "POST":

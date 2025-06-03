@@ -21,6 +21,20 @@
             <span class="text-red-500 text-xs">[{{ error }}]</span>
             {% endfor %}</p>
         </div>
+
+        <div class="field">
+            <p>{{ form.generation_source.label }}</p>
+            {% for subfield in form.generation_source %}
+                <div class="flex items-center my-2">
+                    {{ subfield(class="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500") }}
+                    {{ subfield.label(class="ml-2 text-sm text-gray-700") }}
+                </div>
+            {% endfor %}
+            <p>{% for error in form.generation_source.errors %}
+            <span class="text-red-500 text-xs">[{{ error }}]</span>
+            {% endfor %}</p>
+        </div>
+
         <p>{{ form.submit(class = "form-submit") }}</p>
     </form>
 {% endblock %}
