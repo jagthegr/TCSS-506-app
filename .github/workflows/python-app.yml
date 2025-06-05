@@ -29,6 +29,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Create .env file
+      run: echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY}}" > .env
+    
     - name: Test with pytest
       run: |
         pytest
